@@ -13,6 +13,8 @@ defineProps({
 
 const form = reactive({
   channels: null,
+  email: null,
+  marketing: true,
 })
 
 function submit() {
@@ -26,44 +28,46 @@ function submit() {
     <div
         class="relative min-h-screen bg-gray-100 bg-center sm:flex sm:justify-center sm:items-center bg-dots-darker dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
     >
-        <div v-if="canLogin" class="p-6 text-right sm:fixed sm:top-0 sm:right-0">
-            <Link
-                v-if="$page.props.auth.user"
-                :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                >Dashboard</Link
-            >
-
-            <template v-else>
-                <Link
-                    :href="route('login')"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Log in</Link
-                >
-
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Register</Link
-                >
-            </template>
-        </div>
-
-
         <div class="w-full max-w-lg p-6 mx-auto lg:p-8">
+            <!-- <h2 class="mb-10 text-2xl font-bold leading-9 tracking-tight text-center text-white">All Your YouTube's Are Belonging To Us</h2> -->
+
             <form @submit.prevent="submit">
-                <div class="col-span-full">
+                <div>
                     <label for="channel" class="block text-sm font-medium text-white leading-2">YouTube Channels</label>
 
-                    <p class="text-sm leading-6 text-gray-400">Provide a list of YouTube Channels, each on a new line.</p>
+                    <p class="text-sm leading-6 text-gray-400">Provide a channel per line, maximum of 100 during alpha.</p>
 
                     <div class="mt-2">
-                        <textarea id="channels" v-model="form.channels" rows="2" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                        <textarea v-model="form.channels"  id="channels" placeholder="https://www.youtube.com/@youtube&#10;https://www.youtube.com/@google" rows="2" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end w-full mt-3 gap-x-6">
+                <div class="mt-5">
+                    <label for="channel" class="block text-sm font-medium text-white leading-2">Email Address</label>
+
+                    <p class="text-sm leading-6 text-gray-400">We need this so we can send you the report.</p>
+
+                    <div class="mt-2">
+                        <input v-model="form.email" id="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                    </div>
+                </div>
+
+                <fieldset>
+                    <div class="mt-6 space-y-6">
+                        <div class="relative flex gap-x-3">
+                            <div class="flex items-center h-6">
+                                <input v-model="form.marketing" id="marketing" type="checkbox" class="w-4 h-4 text-indigo-600 rounded border-white/10 bg-white/5 focus:ring-indigo-600 focus:ring-offset-gray-900" />
+                            </div>
+
+                            <div class="text-sm leading-6">
+                                <label for="marketing" class="font-medium text-white">Notifications, marketing, and such like</label>
+                                <p class="text-gray-400">Get notified about features and such because why not.</p>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="flex items-center justify-end w-full mt-5 gap-x-6">
                     <button type="submit" class="w-full px-3 py-2 text-sm font-semibold text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Submit</button>
                 </div>
             </form>
