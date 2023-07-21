@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Sassnowski\Venture\WorkflowStep;
 
 class ProcessYouTubeChannels implements ShouldQueue
@@ -29,17 +30,21 @@ class ProcessYouTubeChannels implements ShouldQueue
      */
     public function handle(YouTubeService $service): void
     {
+        $channels = [
+            //
+        ];
+
         foreach ($this->report->channels as $channelId) {
             $response = $service->getChannelById($channelId);
 
-            $channel = Channel::create([
+            $channel = $this->report->channels()->create([
                 'channel_id' => $response->getId(),
                 'total_subscribers' => $response->getStatistics()->getSubscriberCount() ?? 0,
                 'total_videos' => $response->getStatistics()->getVideoCount() ?? 0,
                 'total_views' => $response->getStatistics()->getViewCount() ?? 0,
                 'details' => $response->getSnippet(),
                 'statistics' => $response->getStatistics(),
-                'published_at' => $response->getSnippet()->getPublishedAt(),
+                'published_at' => Carbon::parse($response->getSnippet()->getPublishedAt()),
             ]);
 
             $results = $service->getVideosByChannel($channel->channel_id);

@@ -4,6 +4,7 @@ namespace App\Models\YouTube;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\SchemalessAttributesTrait;
@@ -51,6 +52,21 @@ class Channel extends Model
         'details',
         'statistics',
     ];
+
+    /**
+     * A channel belongs to many reports.
+     */
+    public function reports(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: Report::class,
+            table: 'youtube_report_channels',
+            foreignPivotKey: 'channel_id',
+            relatedPivotKey: 'report_id',
+            parentKey: 'id',
+            relatedKey: 'id',
+        );
+    }
 
     /**
      * Get the videos for the channel.

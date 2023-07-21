@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Sassnowski\Venture\WorkflowStep;
 
 class ProcessYouTubeVideos implements ShouldQueue
@@ -42,7 +43,7 @@ class ProcessYouTubeVideos implements ShouldQueue
                     'total_comments' => $response->getStatistics()->getCommentCount() ?? 0,
                     'details' => $response->getSnippet(),
                     'statistics' => $response->getStatistics(),
-                    'published_at' => $response->getSnippet()->getPublishedAt(),
+                    'published_at' => Carbon::parse($response->getSnippet()->getPublishedAt()),
                 ]);
             }
         }
