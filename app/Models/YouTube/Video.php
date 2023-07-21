@@ -10,8 +10,6 @@ use Spatie\SchemalessAttributes\SchemalessAttributesTrait;
 
 class Video extends Model
 {
-    use HasFactory;
-
     use HasFactory, SchemalessAttributesTrait, SoftDeletes;
 
     /**
@@ -31,6 +29,9 @@ class Video extends Model
         'statistics',
     ];
 
+    /**
+     * Get the channel that owns the video.
+     */
     public function channel(): BelongsTo
     {
         return $this->belongsTo(Channel::class);

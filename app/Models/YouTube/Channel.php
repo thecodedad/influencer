@@ -29,6 +29,9 @@ class Channel extends Model
         'statistics',
     ];
 
+    /**
+     * Get the videos for the channel.
+     */
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
