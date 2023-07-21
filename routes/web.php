@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Influencer\Services\YouTubeService;
-use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,17 +16,18 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function (YouTubeService $service) {
-    dd($service->getVideoById('pjbmb4JLBTY'));
-    dd($service->getVideosByChannel('UCkzY4M9kg2VmqJ2nNcNM8hw'));
+Route::get('/', fn () => Inertia::render('Welcome', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+]));
 
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+Route::post('/', function (Request $request) {
+    $report = \App\Models\YouTube\Report::create([
+        'channels' => explode(PHP_EOL, $request->get('channels')),
     ]);
-});
+
+    \App\Workflows\ProcessYouTubeReportWorkflow::start($report);
+})->name('submit');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

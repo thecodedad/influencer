@@ -27,6 +27,14 @@ class Video extends Model
         'total_comments',
         'details',
         'statistics',
+        'published_at',
+    ];
+
+    /**
+     * The attributes that should be cast as dates.
+     */
+    protected $dates = [
+        'published_at',
     ];
 
     /**

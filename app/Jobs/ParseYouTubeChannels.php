@@ -9,11 +9,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
+use Sassnowski\Venture\WorkflowStep;
 
 class ParseYouTubeChannels implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WorkflowStep;
 
     /**
      * Create a new job instance.
@@ -37,11 +37,7 @@ class ParseYouTubeChannels implements ShouldQueue
      */
     private function parseChannels(): array
     {
-        $file = Storage::disk('reports')->get($this->report->file_path);
-
-        $channelUrls = explode(PHP_EOL, $file);
-
-        return collect($channelUrls)->reduce(fn ($channels, $channelUrl) => array_merge($channels, [
+        return collect($this->report->channels)->reduce(fn ($channels, $channelUrl) => array_merge($channels, [
             $channelUrl => $this->parseIdentifier($channelUrl)
         ]), []);
     }

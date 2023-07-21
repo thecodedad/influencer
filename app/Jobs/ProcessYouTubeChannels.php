@@ -10,10 +10,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Sassnowski\Venture\WorkflowStep;
 
 class ProcessYouTubeChannels implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WorkflowStep;
 
     /**
      * Create a new job instance.
@@ -33,24 +34,25 @@ class ProcessYouTubeChannels implements ShouldQueue
 
             $channel = Channel::create([
                 'channel_id' => $response->getId(),
-                'total_subscribers' => $response->getStatistics()->getSubscriberCount(),
-                'total_videos' => $response->getStatistics()->getVideoCount(),
-                'total_views' => $response->getStatistics()->getViewCount(),
+                'total_subscribers' => $response->getStatistics()->getSubscriberCount() ?? 0,
+                'total_videos' => $response->getStatistics()->getVideoCount() ?? 0,
+                'total_views' => $response->getStatistics()->getViewCount() ?? 0,
                 'details' => $response->getSnippet(),
                 'statistics' => $response->getStatistics(),
+                'published_at' => $response->getSnippet()->getPublishedAt(),
             ]);
 
-            $response = $service->getVideosByChannel($channel->channel_id);
+            $results = $service->getVideosByChannel($channel->channel_id);
 
             $videos = [
 
             ];
 
-            foreach ($videos as $video) {
+            foreach ($results as $video) {
                 array_push($videos, $video->id->videoId);
             }
 
-            $this->report->videos[$channel->channel_id] = $videos;
+            $this->report->videos[$channel->id] = $videos;
             $this->report->save();
         }
     }

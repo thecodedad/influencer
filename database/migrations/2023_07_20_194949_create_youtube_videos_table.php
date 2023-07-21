@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\YouTube\Channel::class)->constrained('youtube_channels');
             $table->string('video_id')->unique();
-            $table->unsignedInteger('total_views');
-            $table->unsignedInteger('total_likes');
-            $table->unsignedInteger('total_comments');
+            $table->unsignedInteger('total_views')->default(0);
+            $table->unsignedInteger('total_likes')->default(0);
+            $table->unsignedInteger('total_comments')->default(0);
             $table->schemalessAttributes('details');
             $table->schemalessAttributes('statistics');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

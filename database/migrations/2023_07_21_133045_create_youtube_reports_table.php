@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('youtube_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('file_path');
             $table->schemalessAttributes('channels');
             $table->schemalessAttributes('videos');
             $table->timestamps();

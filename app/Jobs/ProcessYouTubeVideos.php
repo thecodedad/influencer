@@ -10,10 +10,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Sassnowski\Venture\WorkflowStep;
 
 class ProcessYouTubeVideos implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WorkflowStep;
 
     /**
      * Create a new job instance.
@@ -36,11 +37,12 @@ class ProcessYouTubeVideos implements ShouldQueue
 
                 $channel->videos()->create([
                     'video_id' => $response->getId(),
-                    'total_views' => $response->getStatistics()->getViewCount(),
-                    'total_likes' => $response->getStatistics()->getLikeCount(),
-                    'total_comments' => $response->getStatistics()->getCommentCount(),
+                    'total_views' => $response->getStatistics()->getViewCount() ?? 0,
+                    'total_likes' => $response->getStatistics()->getLikeCount() ?? 0,
+                    'total_comments' => $response->getStatistics()->getCommentCount() ?? 0,
                     'details' => $response->getSnippet(),
                     'statistics' => $response->getStatistics(),
+                    'published_at' => $response->getSnippet()->getPublishedAt(),
                 ]);
             }
         }

@@ -6,8 +6,8 @@ use App\Jobs\ParseYouTubeChannels;
 use App\Jobs\ProcessYouTubeChannels;
 use App\Jobs\ProcessYouTubeVideos;
 use App\Models\YouTube\Report;
-use Sassnowski\Venture\AbstractWorkflow;
 use Sassnowski\Venture\Facades\Workflow;
+use Sassnowski\Venture\AbstractWorkflow;
 use Sassnowski\Venture\WorkflowDefinition;
 
 class ProcessYouTubeReportWorkflow extends AbstractWorkflow
@@ -19,7 +19,7 @@ class ProcessYouTubeReportWorkflow extends AbstractWorkflow
 
     public function definition(): WorkflowDefinition
     {
-        $workflow = Workflow::define('Process YouTube Report');
+        $workflow = $this->define('Process YouTube Report');
 
         $workflow->addJob(new ParseYouTubeChannels($this->report));
         $workflow->addJob(new ProcessYouTubeChannels($this->report), [ ParseYouTubeChannels::class ]);
