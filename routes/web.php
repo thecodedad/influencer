@@ -18,6 +18,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function (YouTubeService $service) {
+    dd($service->getVideoById('pjbmb4JLBTY'));
     dd($service->getVideosByChannel('UCkzY4M9kg2VmqJ2nNcNM8hw'));
 
     return Inertia::render('Welcome', [

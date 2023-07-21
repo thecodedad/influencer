@@ -5,6 +5,7 @@ namespace App\Influencer\Services;
 use Google\Client;
 use Google\Service\YouTube;
 use Google\Service\YouTube\Channel;
+use Google\Service\YouTube\Video;
 use Illuminate\Support\Arr;
 
 class YouTubeService
@@ -80,7 +81,7 @@ class YouTubeService
         return $videos;
     }
 
-    public function getVideoById(string $id)
+    public function getVideoById(string $id): Video
     {
         $response = $this->youtube->videos->listVideos(implode(',', $this->videoParts), [
             'id' => $id,

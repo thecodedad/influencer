@@ -32,12 +32,15 @@ class ProcessYouTubeVideos implements ShouldQueue
             $channel = Channel::findOrFail($channelId);
 
             foreach ($videoIds as $videoId) {
-                $video = $service->getVideoById($videoId);
+                $response = $service->getVideoById($videoId);
 
                 $channel->videos()->create([
-                    'video_id' => $video->id,
-                    'details' => $video->snippet,
-                    'statistics' => $video->statistics,
+                    'video_id' => $response->getId(),
+                    'total_views' => $response->getStatistics()->getViewCount(),
+                    'total_likes' => $response->getStatistics()->getLikeCount(),
+                    'total_comments' => $response->getStatistics()->getCommentCount(),
+                    'details' => $response->getSnippet(),
+                    'statistics' => $response->getStatistics(),
                 ]);
             }
         }

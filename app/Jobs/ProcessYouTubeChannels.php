@@ -32,9 +32,12 @@ class ProcessYouTubeChannels implements ShouldQueue
             $response = $service->getChannelById($channelId);
 
             $channel = Channel::create([
-                'channel_id' => $response->id,
-                'details' => $response->snippet,
-                'statistics' => $response->statistics,
+                'channel_id' => $response->getId(),
+                'total_subscribers' => $response->getStatistics()->getSubscriberCount(),
+                'total_videos' => $response->getStatistics()->getVideoCount(),
+                'total_views' => $response->getStatistics()->getViewCount(),
+                'details' => $response->getSnippet(),
+                'statistics' => $response->getStatistics(),
             ]);
 
             $response = $service->getVideosByChannel($channel->channel_id);
@@ -45,15 +48,10 @@ class ProcessYouTubeChannels implements ShouldQueue
 
             foreach ($videos as $video) {
                 array_push($videos, $video->id->videoId);
-
-                $video = $service->getVideoById($video->id->videoId);
-
-                $channel->videos()->create([
-                    'video_id' => $video->id,
-                    'details' => $video->snippet,
-                    'statistics' => $video->statistics,
-                ]);
             }
+
+            $this->report->videos[$channel->channel_id] = $videos;
+            $this->report->save();
         }
     }
 }

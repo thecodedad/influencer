@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\YouTube\Channel::class)->constrained('youtube_channels');
             $table->string('video_id')->unique();
-            $table->unsignedInteger('total_subscribers');
-            $table->unsignedInteger('total_videos');
             $table->unsignedInteger('total_views');
             $table->unsignedInteger('total_likes');
             $table->unsignedInteger('total_comments');

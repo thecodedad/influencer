@@ -22,8 +22,6 @@ class Video extends Model
      */
     protected $fillable = [
         'video_id',
-        'total_subscribers',
-        'total_videos',
         'total_views',
         'total_likes',
         'total_comments',
