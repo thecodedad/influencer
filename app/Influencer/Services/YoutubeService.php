@@ -60,13 +60,22 @@ class YoutubeService
         return Arr::first($response->getItems());
     }
 
-    public function getVideosByChannel(string $channelId): array
+    public function getVideosByChannel(string $channelId, string $pageToken = null): array
     {
-        return $this->youtube->search->listSearch('id', [
+        $response = $this->youtube->search->listSearch('id', [
             'channelId' => $channelId,
             'type' => 'video',
             'maxResults' => 50,
-        ])->getItems();
+            'pageToken' => $pageToken,
+        ]);
+
+        $videos = $response->getItems();
+
+        if ($response->nextPageToken) {
+            $videos = array_merge($videos, $this->getVideosByChannel($channelId, $response->nextPageToken));
+        }
+
+        return $videos;
     }
 
     public function getVideoById(string $id)

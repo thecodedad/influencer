@@ -20,9 +20,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function (YoutubeService $service) {
-    $url = 'https://www.youtube.com/@FreshCapMushrooms';
-
-    ProcessYouTubeChannel::dispatch($url);
+    dd($service->getVideosByChannel('UCkzY4M9kg2VmqJ2nNcNM8hw'));
 
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
