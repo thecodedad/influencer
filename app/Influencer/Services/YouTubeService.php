@@ -7,7 +7,7 @@ use Google\Service\YouTube;
 use Google\Service\YouTube\Channel;
 use Illuminate\Support\Arr;
 
-class YoutubeService
+class YouTubeService
 {
     /**
      * The Youtube API client that will be used to make requests.
@@ -20,6 +20,7 @@ class YoutubeService
      * We want to retrieve these parts of the channel from the API.
      *
      * @see https://developers.google.com/youtube/v3/docs/channels/list#part
+     *
      * @var array<int, string>
      */
     protected array $channelParts = [
@@ -32,6 +33,7 @@ class YoutubeService
      * We want to retrieve these parts of the video from the API.
      *
      * @see https://developers.google.com/youtube/v3/docs/videos/list#part
+     *
      * @var array<int, string>
      */
     protected array $videoParts = [

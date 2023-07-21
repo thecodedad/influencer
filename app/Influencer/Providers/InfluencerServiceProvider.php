@@ -2,7 +2,7 @@
 
 namespace App\Influencer\Providers;
 
-use App\Influencer\Services\YoutubeService;
+use App\Influencer\Services\YouTubeService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,8 +13,8 @@ class InfluencerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        App::bind(YoutubeService::class, function () {
-            return new \App\Influencer\Services\YoutubeService(
+        App::bind(YouTubeService::class, function () {
+            return new \App\Influencer\Services\YouTubeService(
                 key: config('services.google.key')
             );
         });

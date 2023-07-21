@@ -13,10 +13,20 @@ class Video extends Model
     use HasFactory, SchemalessAttributesTrait, SoftDeletes;
 
     /**
+     * The table associated with the model.
+     */
+    protected $table = 'youtube_videos';
+
+    /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
         'video_id',
+        'total_subscribers',
+        'total_videos',
+        'total_views',
+        'total_likes',
+        'total_comments',
         'details',
         'statistics',
     ];

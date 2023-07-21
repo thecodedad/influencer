@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Influencer\Services\YoutubeService;
-use App\Jobs\ProcessYouTubeChannel;
+use App\Influencer\Services\YouTubeService;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,7 +17,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function (YoutubeService $service) {
+Route::get('/', function (YouTubeService $service) {
     dd($service->getVideosByChannel('UCkzY4M9kg2VmqJ2nNcNM8hw'));
 
     return Inertia::render('Welcome', [

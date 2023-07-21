@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('channels', function (Blueprint $table) {
+        Schema::create('youtube_channels', function (Blueprint $table) {
             $table->id();
             $table->string('channel_id')->unique();
+            $table->unsignedInteger('total_subscribers');
+            $table->unsignedInteger('total_videos');
+            $table->unsignedInteger('total_views');
+            $table->unsignedInteger('total_likes');
+            $table->unsignedInteger('total_comments');
+            $table->decimal('weekly_cadence', 5, 2);
+            $table->decimal('monthly_cadence', 5, 2);
+            $table->decimal('average_views', 5, 2);
+            $table->decimal('average_likes', 5, 2);
+            $table->decimal('average_comments', 5, 2);
             $table->schemalessAttributes('details');
             $table->schemalessAttributes('statistics');
             $table->timestamps();

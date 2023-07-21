@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\YouTube\Channel::class)->constrained();
-            $table->string('video_id')->unique();
-            $table->schemalessAttributes('details');
-            $table->schemalessAttributes('statistics');
+            $table->string('file_path');
+            $table->schemalessAttributes('channels');
+            $table->schemalessAttributes('videos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('reports');
     }
 };

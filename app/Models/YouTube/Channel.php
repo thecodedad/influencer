@@ -13,10 +13,25 @@ class Channel extends Model
     use HasFactory, SchemalessAttributesTrait, SoftDeletes;
 
     /**
+     * The table associated with the model.
+     */
+    protected $table = 'youtube_channels';
+
+    /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
         'channel_id',
+        'total_subscribers',
+        'total_videos',
+        'total_views',
+        'total_likes',
+        'total_comments',
+        'weekly_cadence',
+        'monthly_cadence',
+        'average_views',
+        'average_likes',
+        'average_comments',
         'details',
         'statistics',
     ];
