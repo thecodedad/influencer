@@ -4,6 +4,7 @@ namespace App\Influencer\Services;
 
 use Google\Client;
 use Google\Service\YouTube;
+use Google\Service\YouTube\Channel;
 use Illuminate\Support\Arr;
 
 class YoutubeService
@@ -23,11 +24,8 @@ class YoutubeService
      */
     protected array $channelParts = [
         'id',
-        'brandingSettings',
-        'topicDetails',
         'snippet',
         'statistics',
-        'status',
     ];
 
     /**
@@ -38,13 +36,8 @@ class YoutubeService
      */
     protected array $videoParts = [
         'id',
-        'topicDetails',
         'snippet',
-        'player',
         'statistics',
-        'status',
-        'liveStreamingDetails',
-        'recordingDetails'
 
     ];
 
@@ -58,9 +51,27 @@ class YoutubeService
         $this->youtube = new Youtube($client);
     }
 
-    public function getChannel(string $id)
+    public function getChannelById(string $id): Channel
     {
         $response = $this->youtube->channels->listChannels(implode(',', $this->channelParts), [
+            'id' => $id,
+        ]);
+
+        return Arr::first($response->getItems());
+    }
+
+    public function getVideosByChannel(string $channelId): array
+    {
+        return $this->youtube->search->listSearch('id', [
+            'channelId' => $channelId,
+            'type' => 'video',
+            'maxResults' => 50,
+        ])->getItems();
+    }
+
+    public function getVideoById(string $id)
+    {
+        $response = $this->youtube->videos->listVideos(implode(',', $this->videoParts), [
             'id' => $id,
         ]);
 

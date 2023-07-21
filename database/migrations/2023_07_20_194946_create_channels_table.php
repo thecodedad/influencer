@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('channel_id')->unique();
             $table->schemalessAttributes('details');
-            $table->schemalessAttributes('meta');
-            $table->schemalessAttributes('branding');
             $table->schemalessAttributes('statistics');
-            $table->schemalessAttributes('status');
-            $table->schemalessAttributes('topics');
             $table->timestamps();
             $table->softDeletes();
         });

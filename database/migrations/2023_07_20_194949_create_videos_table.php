@@ -14,14 +14,9 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\YouTube\Channel::class)->constrained();
+            $table->string('video_id')->unique();
             $table->schemalessAttributes('details');
-            $table->schemalessAttributes('meta');
-            $table->schemalessAttributes('player');
-            $table->schemalessAttributes('recording');
             $table->schemalessAttributes('statistics');
-            $table->schemalessAttributes('status');
-            $table->schemalessAttributes('streaming');
-            $table->schemalessAttributes('topics');
             $table->timestamps();
         });
     }
