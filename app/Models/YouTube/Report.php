@@ -4,7 +4,7 @@ namespace App\Models\YouTube;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\SchemalessAttributesTrait;
 
@@ -21,30 +21,21 @@ class Report extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'channels',
-        'videos',
+        'data',
     ];
 
     /**
      * The attributes that should be cast as schemaless.
      */
     protected $schemalessAttributes = [
-        'channels',
-        'videos',
+        'data',
     ];
 
     /**
-     * A report belongs to many channels.
+     * A report has many channels.
      */
-    public function channels(): BelongsToMany
+    public function channels(): HasMany
     {
-        return $this->belongsToMany(
-            related: Channel::class,
-            table: 'youtube_report_channels',
-            foreignPivotKey: 'report_id',
-            relatedPivotKey: 'channel_id',
-            parentKey: 'id',
-            relatedKey: 'id',
-        );
+        return $this->hasMany(Channel::class);
     }
 }

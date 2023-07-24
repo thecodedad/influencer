@@ -34,7 +34,7 @@ class ProcessYouTubeChannels implements ShouldQueue
             //
         ];
 
-        foreach ($this->report->channels as $channelId) {
+        foreach ($this->report->data['channels'] as $channelId) {
             $response = $service->getChannelById($channelId);
 
             $channel = $this->report->channels()->create([
@@ -57,7 +57,11 @@ class ProcessYouTubeChannels implements ShouldQueue
                 array_push($videos, $video->id->videoId);
             }
 
-            $this->report->videos[$channel->id] = $videos;
+            $data = $this->report->data['videos'];
+
+            $data[$channel->id] = $videos;
+
+            $this->report->data['videos'] = $data;
             $this->report->save();
         }
     }

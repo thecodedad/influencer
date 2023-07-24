@@ -7,7 +7,6 @@ use App\Jobs\ParseYouTubeChannelsUrls;
 use App\Jobs\ProcessYouTubeChannels;
 use App\Jobs\ProcessYouTubeVideos;
 use App\Models\YouTube\Report;
-use Sassnowski\Venture\Facades\Workflow;
 use Sassnowski\Venture\AbstractWorkflow;
 use Sassnowski\Venture\WorkflowDefinition;
 

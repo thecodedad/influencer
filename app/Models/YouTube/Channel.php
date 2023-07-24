@@ -4,7 +4,7 @@ namespace App\Models\YouTube;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\SchemalessAttributesTrait;
@@ -44,13 +44,6 @@ class Channel extends Model
     ];
 
     /**
-     * The attributes that should be cast as dates.
-     */
-    protected $dates = [
-        'published_at',
-    ];
-
-    /**
      * The attributes that should be cast as schemaless.
      */
     protected $schemalessAttributes = [
@@ -59,18 +52,11 @@ class Channel extends Model
     ];
 
     /**
-     * A channel belongs to many reports.
+     * A channel belongs to a report.
      */
-    public function reports(): BelongsToMany
+    public function report(): BelongsTo
     {
-        return $this->belongsToMany(
-            related: Report::class,
-            table: 'youtube_report_channels',
-            foreignPivotKey: 'channel_id',
-            relatedPivotKey: 'report_id',
-            parentKey: 'id',
-            relatedKey: 'id',
-        );
+        return $this->belongsTo(Report::class);
     }
 
     /**

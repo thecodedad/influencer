@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('youtube_reports', function (Blueprint $table) {
             $table->id();
-            $table->schemalessAttributes('channels');
-            $table->schemalessAttributes('videos');
+            $table->schemalessAttributes('data');
             $table->timestamps();
             $table->softDeletes();
         });

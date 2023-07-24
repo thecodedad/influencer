@@ -30,7 +30,7 @@ class ProcessYouTubeVideos implements ShouldQueue
      */
     public function handle(YouTubeService $service): void
     {
-        foreach ($this->report->videos as $channelId => $videoIds) {
+        foreach ($this->report->data['videos'] as $channelId => $videoIds) {
             $channel = Channel::findOrFail($channelId);
 
             foreach ($videoIds as $videoId) {

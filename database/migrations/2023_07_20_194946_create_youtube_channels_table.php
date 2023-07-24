@@ -23,9 +23,9 @@ return new class extends Migration
             $table->decimal('total_engagement', 5, 2)->default(0.00);
             $table->decimal('weekly_cadence', 5, 2)->default(0.00);
             $table->decimal('monthly_cadence', 5, 2)->default(0.00);
-            $table->decimal('average_views', 5, 2)->default(0.00);
-            $table->decimal('average_likes', 5, 2)->default(0.00);
-            $table->decimal('average_comments', 5, 2)->default(0.00);
+            $table->decimal('average_views', 12, 2)->default(0.00);
+            $table->decimal('average_likes', 12, 2)->default(0.00);
+            $table->decimal('average_comments', 12, 2)->default(0.00);
             $table->decimal('average_engagement', 5, 2)->default(0.00);
             $table->decimal('view_comment_ratio', 5, 2)->default(0.00);
             $table->decimal('view_engagement_ratio', 5, 2)->default(0.00);

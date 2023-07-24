@@ -23,6 +23,7 @@ return new class extends Migration
             $table->schemalessAttributes('statistics');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

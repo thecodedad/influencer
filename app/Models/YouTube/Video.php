@@ -31,13 +31,6 @@ class Video extends Model
     ];
 
     /**
-     * The attributes that should be cast as dates.
-     */
-    protected $dates = [
-        'published_at',
-    ];
-
-    /**
      * The attributes that should be cast as schemaless.
      */
     protected $schemalessAttributes = [

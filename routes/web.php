@@ -23,7 +23,10 @@ Route::get('/', fn () => Inertia::render('Welcome', [
 
 Route::post('/', function (Request $request) {
     $report = \App\Models\YouTube\Report::create([
-        'channels' => explode(PHP_EOL, $request->get('channels')),
+        'data' => [
+            'channels' => explode(PHP_EOL, $request->get('channels')),
+            'videos' => [],
+        ],
     ]);
 
     \App\Workflows\ProcessYouTubeReportWorkflow::start($report);
